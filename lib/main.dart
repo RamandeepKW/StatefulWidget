@@ -109,7 +109,7 @@ class RatingBox extends StatefulWidget {
 
 class RatingState extends State<RatingBox> {
   int rating = 0;
-  double size = 20;
+  final double size = 20;
 
   @override
   Widget build(BuildContext context) {
