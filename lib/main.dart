@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfirsttutorial/product.dart';
 import 'package:flutterfirsttutorial/productbox.dart';
 
 void main() {
@@ -21,29 +23,167 @@ class MyHome extends StatefulWidget {
   }
 }
 
-class _MyState extends State<MyHome>{
+List itemList = <Product>[];
+
+class _MyState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
+    getProducts();
     return Scaffold(
-      appBar: AppBar(title: Text('Home'),),
-      body: ListView(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: ListView.builder(
+        itemCount: itemList.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            child: ProductBox(itemList[index]),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProductRange(itemList[index])));
+            },
+          );
+        },
         shrinkWrap: true,
         padding: EdgeInsets.all(2),
-        children: <Widget>[
-          ProductBox(15, "description", "name"),
-          ProductBox(14, "description", "name"),
-          ProductBox(13, "description", "name"),
-          ProductBox(12, "description", "name"),
-          ProductBox(11, "description", "name"),
-          ProductBox(1, "description", "name"),
-          ProductBox(10, "description", "name"),
-          ProductBox(9, "description", "name"),
-          ProductBox(8, "description", "name"),
-        ],
       ),
     );
   }
 
+  void getProducts() {
+    itemList.add(Product(15, "description", "name"));
+    itemList.add(Product(14, "description", "name"));
+    itemList.add(Product(13, "description", "name"));
+    itemList.add(Product(12, "description", "name"));
+    itemList.add(Product(11, "description", "name"));
+    itemList.add(Product(1, "description", "name"));
+    itemList.add(Product(10, "description", "name"));
+    itemList.add(Product(9, "description", "name"));
+    itemList.add(Product(8, "description", "name"));
+  }
+}
+
+class ProductRange extends StatelessWidget {
+  final Product item;
+
+  ProductRange(this.item);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detail Page'),
+      ),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Image.asset("assets/images/lake.jpg"),
+            Expanded(
+                child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(item.name),
+                  Text(item.description),
+                  Text(item.price.toString()),
+                  RatingBox()
+                ],
+              ),
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class RatingBox extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return RatingState();
+  }
+}
+
+class RatingState extends State<RatingBox> {
+  int rating = 0;
+  double size = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Container(
+            child: IconButton(
+          icon: rating >= 1
+              ? Icon(
+                  Icons.star_rate,
+                  color: Colors.amber[700],
+                  size: size,
+                )
+              : Icon(
+                  Icons.star_rate_outlined,
+                  color: Colors.amber[700],
+                  size: size,
+                ),
+          onPressed: () => setRatingOne(),
+        )),
+        Container(
+            child: IconButton(
+          icon: rating >= 2
+              ? Icon(
+                  Icons.star_rate,
+                  color: Colors.amber[700],
+                  size: size,
+                )
+              : Icon(
+                  Icons.star_rate_outlined,
+                  color: Colors.amber[700],
+                  size: size,
+                ),
+          onPressed: () => setRatingTwo(),
+        )),
+        Container(
+            child: IconButton(
+          icon: rating >= 3
+              ? Icon(
+                  Icons.star_rate,
+                  color: Colors.amber[700],
+                  size: size,
+                )
+              : Icon(
+                  Icons.star_rate_outlined,
+                  color: Colors.amber[700],
+                  size: size,
+                ),
+          onPressed: () => setRatingThree(),
+        )),
+      ],
+    );
+  }
+
+  setRatingOne() {
+    setState(() {
+      rating = 1;
+    });
+  }
+
+  setRatingTwo() {
+    setState(() {
+      rating = 2;
+    });
+  }
+
+  setRatingThree() {
+    setState(() {
+      rating = 3;
+    });
+  }
 }
 
 /*

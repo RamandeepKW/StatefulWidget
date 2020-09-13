@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutterfirsttutorial/product.dart';
+
+import 'main.dart';
 
 class ProductBox extends StatelessWidget {
-  final String description, name;
+/*  final String description, name;
   final int price;
 
-  ProductBox(this.price, this.description, this.name);
+  ProductBox(this.price, this.description, this.name);*/
+
+  final item;
+
+  ProductBox(this.item);
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +29,10 @@ class ProductBox extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(name),
-                    Text(description),
-                    Text('Price is '+price.toString()),
+                    Text(item.name),
+                    Text(item.description),
+                    Text('Price: ' + item.price.toString()),
+                    RatingBox()
                   ],
                 ),
               ),
